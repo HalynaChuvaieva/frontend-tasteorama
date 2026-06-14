@@ -9,22 +9,19 @@ import AuthProvider from "@/components/AuthProvider/AuthProvider";
 
 export default function RootLayout({
   children,
-  modal,
 }: Readonly<{
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.variable}>
+      <body >
         <TanStackProvider>
           <AuthProvider>
             <Header />
             <main>
               {children}
-              {modal}
             </main>
-            <Footer />
           </AuthProvider>
         </TanStackProvider>
       </body>

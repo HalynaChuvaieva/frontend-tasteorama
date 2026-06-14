@@ -1,22 +1,26 @@
 'use client';
 
-import { Formik, Form, Field, FieldArray } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { useId } from 'react';
+import { addRecipeValidationSchema } from '@/lib/validation/addRecipeValidationSchema';
+import DynamicIngredients from './DynamicIngredients/DynamicIngredients';
 import s from './AddRecipesForm.module.css';
+import {
+  AddRecipeFormValues,
+  AddRecipeFormProps,
+ } from '@/types/addRecipe';
 
-interface AddRecipeFormProps {
-  ingredients: { id: string; name: string }[];
-}
-
-const initialValues = {
+const initialValues: AddRecipeFormValues = {
   recipeTitle: '',
   recipeDescription: '',
   cookingTime: 10,
   calories: 150,
   category: 'Soup',
   photo: null,
-  nameIngredients: '',
+  selectedIngredientId: '',
   amount: '',
+  ingredientsList: [],
+  instructions: '',
 };
 
 export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
@@ -25,6 +29,7 @@ export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
   return (
     <Formik
       initialValues={initialValues}
+      validationSchema={addRecipeValidationSchema}
       onSubmit={(values) => {
         console.log(values);
       }}
@@ -99,64 +104,7 @@ export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
             </div>
           </div>
 
-          <h3 className={s.sectionTitle}>Ingredients</h3>
-
-          <div className={s.ingredientRow}>
-            <div className={s.fieldGroup}>
-              <label className={s.label} htmlFor={`${fieldId}-nameIngredients`}>
-                Name
-              </label>
-              <Field
-                className={s.select}
-                name="nameIngredients"
-                id={`${fieldId}-nameIngredients`}
-                as="select"
-              >
-                {ingredients.map(({ id, name }) => (
-                  <option key={id} value={id}>
-                    {name}
-                  </option>
-                ))}
-              </Field>
-            </div>
-            <div className={s.fieldGroup}>
-              <label className={s.label} htmlFor={`${fieldId}-amount`}>
-                Amount
-              </label>
-              <Field
-                className={s.input}
-                name="amount"
-                id={`${fieldId}-amount`}
-                type="text"
-                placeholder="e.g. 100g"
-              />
-            </div>
-            <button type="button" className={s.btnSecondary}>
-              Add
-            </button>
-          </div>
-
-          <FieldArray name="ingredientsList">
-            {({ remove, form }) => (
-              <div className={s.ingredientList}>
-                {form.values.ingredientsList?.map(
-                  (item: { name: string; amount: string }, index: number) => (
-                    <div key={index} className={s.ingredientItem}>
-                      <span>{item.name}</span>
-                      <span>{item.amount}</span>
-                      <button
-                        type="button"
-                        className={s.btnDanger}
-                        onClick={() => remove(index)}
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  )
-                )}
-              </div>
-            )}
-          </FieldArray>
+          <DynamicIngredients ingredients={ingredients} />
 
           <h3 className={s.sectionTitle}>Instructions</h3>
 
