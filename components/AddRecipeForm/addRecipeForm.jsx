@@ -82,13 +82,17 @@ export default function addRecipeForm({ ingredients }: Props) {
           </button>
 
           
-          <FieldArray name="ingredients">
-{/* Тут має відоображатись список інгредієнтів які ми додали в полях вище  */}
+          <FieldArray name="ingredientsList">
+{/* Тут має відоображатись список інгредієнтів які ми обирали і додавали через кнопку Add new ingredient */}
+         {/* щось схоже на таблицю Exl. з можливістю видаляти  */}
           </FieldArray>
 
           <h3>Instructions</h3>
+
+<label htmlFor="id={`${fieldId}-instructions`}">Instructions</label>
           <Field
             name="instructions"
+             id={`${fieldId}-instructions`}
             type="text"
             as="textarea"
             placeholder="Enter a text"
