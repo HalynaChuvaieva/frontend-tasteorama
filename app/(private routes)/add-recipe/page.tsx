@@ -1,4 +1,4 @@
-import AddRecipeForm from '@/components/AddRecipeForm/addRecipeForm';
+import AddRecipeForm from '@/components/AddRecipeForm/AddRecipeForm';
 
 export default async function AddRecipePage() {
   const ingredients = await getIngredients(); //запит до БД
