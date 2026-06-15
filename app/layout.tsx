@@ -1,11 +1,16 @@
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
-import { Roboto } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
 
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
@@ -16,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.variable}>
+      <body className={montserrat.variable}>
         <TanStackProvider>
           <AuthProvider>
             <Header />
