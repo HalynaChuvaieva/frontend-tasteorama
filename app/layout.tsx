@@ -8,7 +8,6 @@ import AuthProvider from '@/components/AuthProvider/AuthProvider';
 
 export default function RootLayout({
   children,
-  modal,
 }: Readonly<{
   children: React.ReactNode;
   modal: React.ReactNode;
@@ -21,9 +20,7 @@ export default function RootLayout({
             <Header />
             <main>
               {children}
-              {modal}
             </main>
-            <Footer />
           </AuthProvider>
         </TanStackProvider>
       </body>

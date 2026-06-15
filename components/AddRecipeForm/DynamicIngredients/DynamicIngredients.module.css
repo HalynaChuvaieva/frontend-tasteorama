@@ -1,0 +1,229 @@
+.wrapper {
+    width: 100%;
+    margin-top: 32px;
+}
+
+.sectionTitle {
+    margin: 0 0 24px;
+    font-size: 32px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #000;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.fieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.label {
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 400;
+    color: #000;
+}
+
+.select,
+.input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    background-color: #fff;
+    font-size: 18px;
+    line-height: 1.4;
+    color: #555;
+    outline: none;
+    transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease;
+}
+
+.select {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 44px;
+    background-image: url("data:image/svg+xml,%3Csvg width='16' height='10' viewBox='0 0 16 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L8 8.5L15 1.5' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px 10px;
+}
+
+.select:focus,
+.input:focus {
+    border-color: #a56f43;
+    box-shadow: 0 0 0 2px rgba(165, 111, 67, 0.16);
+}
+
+.amountColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.addButton {
+    width: 100%;
+    height: 48px;
+    margin-top: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #a56f43;
+    color: #fff;
+    font-size: 17px;
+    line-height: 1.2;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 200ms ease,
+        opacity 200ms ease;
+}
+
+.addButton:hover,
+.addButton:focus {
+    background-color: #875933;
+}
+
+.addButton:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.error {
+    margin: -16px 0 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #d32f2f;
+}
+
+.listHeader {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #d9d9d9;
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: 700;
+    color: #000;
+}
+
+.ingredientList {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ingredientItem {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.ingredientName,
+.ingredientAmount {
+    font-size: 16px;
+    line-height: 1.4;
+    color: #333;
+}
+
+.removeButton {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid #d32f2f;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #d32f2f;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 200ms ease,
+        color 200ms ease;
+}
+
+.removeButton:hover,
+.removeButton:focus {
+    background-color: #d32f2f;
+    color: #fff;
+}
+
+/* tablet */
+@media screen and (min-width: 768px) {
+    .controls {
+        grid-template-columns: 430px 249px;
+        align-items: start;
+        gap: 24px;
+        margin-bottom: 34px;
+    }
+
+    .amountColumn {
+        gap: 16px;
+    }
+
+    .listHeader {
+        max-width: 430px;
+    }
+
+    .ingredientItem {
+        max-width: 430px;
+        grid-template-columns: 1fr 1fr auto;
+    }
+
+    .removeButton {
+        grid-column: auto;
+        width: auto;
+        min-width: 80px;
+    }
+}
+
+/* desktop */
+@media screen and (min-width: 1440px) {
+    .sectionTitle {
+        margin-bottom: 28px;
+        font-size: 40px;
+    }
+
+    .controls {
+        grid-template-columns: 497px 290px;
+        gap: 24px;
+    }
+
+    .select,
+    .input {
+        height: 48px;
+    }
+
+    .addButton {
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .amountColumn {
+        gap: 16px;
+    }
+
+    .listHeader {
+        max-width: 304px;
+    }
+
+    .ingredientItem {
+        max-width: 497px;
+    }
+}
