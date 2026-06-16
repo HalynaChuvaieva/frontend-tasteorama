@@ -32,6 +32,21 @@
                 font-weight: 600;
                 text-decoration: underline;
                 text-decoration-skip-ink: auto;
+
+                &:hover,
+                &:focus-visible {
+                    opacity: 0.5;
+                }
+
+                &:active {
+                    /* border-bottom: 1px solid var(--white); */
+                    text-decoration: none;
+
+                }
+
+                &:disabled {
+                    opacity: 0.2;
+                }
             }
         }
     }
