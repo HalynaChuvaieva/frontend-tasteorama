@@ -25,7 +25,7 @@ export type UpdateUserRequest = {
 };
 
 export const updateMe = async (payload: UpdateUserRequest) => {
-  const res = await nextServer.patch<User>("/users/me", payload);
+  const res = await nextServer.patch<User>("/users/current/", payload);
   return res.data;
 };
 
@@ -35,11 +35,11 @@ export const login = async (data: LoginRequest) => {
 };
 
 export const logout = async (): Promise<void> => {
-  await nextServer.post("/auth/logout");
+  await nextServer.post("/api/auth/logout");
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>("/users/me");
+  const { data } = await nextServer.get<User>("/users/current/");
   return data;
 };
 
