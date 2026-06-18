@@ -1,15 +1,10 @@
-import { NewNoteContent, Note } from "@/types/note";
 import { nextServer } from "./api";
 import { User } from "@/types/user";
-
-export interface FetchNotesResponse {
-  notes: Note[];
-  totalPages: number;
-}
 
 export type RegisterRequest = {
   email: string;
   password: string;
+  name: string;
 };
 export type LoginRequest = {
   email: string;
@@ -35,7 +30,7 @@ export const login = async (data: LoginRequest) => {
 };
 
 export const logout = async (): Promise<void> => {
-  await nextServer.post("/api/auth/logout");
+  await nextServer.post("/auth/logout");
 };
 
 export const getMe = async () => {
@@ -48,32 +43,6 @@ export const checkSession = async () => {
   return res.data.success;
 };
 
-export async function fetchNotes(
-  query: string,
-  page: number,
-  tag?: string,
-): Promise<FetchNotesResponse> {
-  const params = { search: query, page, perPage: 12, tag: tag };
-  const { data } = await nextServer.get<FetchNotesResponse>("/notes", {
-    params,
-  });
-  return data;
-}
-
-export async function fetchNoteById(id: string) {
-  const res = await nextServer.get<Note>(`/notes/${id}`);
-  return res.data;
-}
-
-export async function createNote(newNote: NewNoteContent): Promise<Note> {
-  const { data } = await nextServer.post<Note>("/notes", newNote);
-  return data;
-}
-
-export async function deleteNote(id: Note["id"]): Promise<Note> {
-  const { data } = await nextServer.delete<Note>(`/notes/${id}`);
-  return data;
-}
 
 export const register = async (data: RegisterRequest) => {
   const res = await nextServer.post<User>("/auth/register", data);
