@@ -1,3 +1,4 @@
+import { Recipe } from "@/types/recipe";
 import { nextServer } from "./api";
 import { User } from "@/types/user";
 
@@ -48,3 +49,31 @@ export const register = async (data: RegisterRequest) => {
   const res = await nextServer.post<User>("/auth/register", data);
   return res.data;
 };
+
+
+export interface FetchRecipesResponse {
+  page: number;
+  perPage: number;
+  totalRecipes: number;
+  totalPages: number;
+  recipes: Recipe[];
+}
+
+export async function fetchRecipes(
+  page: number = 1,
+  query: string = "",
+  category?: string
+): Promise<FetchRecipesResponse> {
+  const params = { 
+    search: query, 
+    page, 
+    perPage: 12, 
+    category 
+  };
+
+  const { data } = await nextServer.get<FetchRecipesResponse>("/api/recipes", {
+    params,
+  });
+
+  return data;
+}
