@@ -90,6 +90,7 @@
 .addButton:hover,
 .addButton:focus {
     background-color: #875933;
+    opacity: 0.5;
 }
 
 .addButton:disabled {
@@ -150,7 +151,6 @@
     padding: 0;
     border: none;
     background-color: transparent;
-    color: #C80000;
     cursor: pointer;
 
     display: inline-flex;
@@ -170,7 +170,7 @@
     height: 16px;
     display: block;
     fill: none;
-    stroke: currentColor;
+    stroke: #000;
     pointer-events: none;
 }
 
