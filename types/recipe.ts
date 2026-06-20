@@ -1,5 +1,5 @@
-import { Category } from "./category";
-import { RecipeIngredient } from "./ingredient";
+import { Category } from './category';
+import { RecipeIngredient } from './ingredient';
 
 export interface Recipe {
   _id: string;
@@ -10,8 +10,8 @@ export interface Recipe {
   category: Category;
   ingredients: RecipeIngredient[];
   instructions: string;
-  image?: string;
+  image: string;
   owner: string;
-  createdAt: string; 
-  updatedAt: string; 
+  createdAt: string;
+  updatedAt: string;
 }
