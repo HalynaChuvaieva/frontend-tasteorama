@@ -4,7 +4,6 @@ import { fetchRecipes } from '@/lib/api/recipesApi';
 import SearchBox from '../SearchBox/SearchBox';
 import css from './Hero.module.css';
 import { useFiltersStore } from '@/lib/store/filtersStore';
-import iziToast from 'izitoast';
 
 function Hero() {
   const filters = useFiltersStore((state) => state.filters);
@@ -17,6 +16,8 @@ function Hero() {
     filtersChange({ keyword: value });
 
     setIsLoading(true);
+
+    const iziToast = (await import('izitoast')).default;
 
     try {
       const data = await fetchRecipes({

@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-export default function RecipeCard({ recipe }) {
-  return <></>;
-=======
 'use client';
 
 import { useState } from 'react';
@@ -138,5 +134,4 @@ export default function RecipeCard({
       <AuthModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
->>>>>>> main
 }

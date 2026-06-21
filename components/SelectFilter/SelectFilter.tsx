@@ -1,4 +1,6 @@
-import { Ingredient, Category } from '@/types/recipes';
+import { Category } from '@/types/category';
+import { Ingredient } from '@/types/ingredient';
+
 import { ChangeEvent } from 'react';
 
 interface SelectFiltersProps {
