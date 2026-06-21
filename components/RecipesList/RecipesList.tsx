@@ -61,31 +61,12 @@ export default function RecipeList({
         <h1 className={css.title}>Recipes</h1>
         <div className={css.meta}>
           <Filters />
-          <span className={css.count}>{totalRecipes} recipes</span>
-          <button className={css.filterBtn} aria-label="Filters">
-            Filters
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-              />
-            </svg>
-          </button>
         </div>
       </div>
 
       <ul className={css.grid}>
         {recipes.map((recipe) => (
-          <li key={recipe.id} className={css.gridItem}>
+          <li key={recipe._id} className={css.gridItem}>
             <RecipeCard recipe={recipe} />
           </li>
         ))}

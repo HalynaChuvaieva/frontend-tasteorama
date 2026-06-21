@@ -1,8 +1,8 @@
-import { Category } from "./category";
-import { RecipeIngredient } from "./ingredient";
+import { Category } from './category';
+import { RecipeIngredient } from './ingredient';
 
 export interface Recipe {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   time: number;
@@ -12,6 +12,6 @@ export interface Recipe {
   instructions: string;
   image?: string;
   owner: string;
-  createdAt: string; 
-  updatedAt: string; 
+  createdAt: string;
+  updatedAt: string;
 }

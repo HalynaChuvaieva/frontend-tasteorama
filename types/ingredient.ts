@@ -1,4 +1,4 @@
-interface IngredientDetails {
+export interface IngredientDetails {
   _id: string;
   name: string;
   desc: string;
