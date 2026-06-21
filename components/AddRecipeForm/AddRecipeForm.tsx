@@ -1,7 +1,8 @@
 'use client';
 
-import { Formik, Form, Field } from 'formik';
-import { useId } from 'react';
+import { Formik, Form, Field, useFormikContext } from 'formik';
+import { useId, useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import { addRecipeValidationSchema } from '@/lib/validation/addRecipeValidationSchema';
 import DynamicIngredients from './DynamicIngredients/DynamicIngredients';
 import s from './AddRecipesForm.module.css';
@@ -9,6 +10,60 @@ import {
   AddRecipeFormValues,
   AddRecipeFormProps,
  } from '@/types/addRecipe';
+
+function PhotoUpload() {
+  const { setFieldValue } = useFormikContext<AddRecipeFormValues>();
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const prevUrlRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (prevUrlRef.current) URL.revokeObjectURL(prevUrlRef.current);
+    };
+  }, []);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0] ?? null;
+    if (prevUrlRef.current) URL.revokeObjectURL(prevUrlRef.current);
+    if (file) {
+      const url = URL.createObjectURL(file);
+      prevUrlRef.current = url;
+      setPreviewUrl(url);
+      setFieldValue('photo', file);
+    } else {
+      prevUrlRef.current = null;
+      setPreviewUrl(null);
+      setFieldValue('photo', null);
+    }
+  }
+
+  return (
+    <div className={s.photoUpload} onClick={() => inputRef.current?.click()}>
+      {previewUrl ? (
+        <Image
+          src={previewUrl}
+          alt="Recipe preview"
+          fill
+          className={s.photoPreview}
+          style={{ objectFit: 'cover' }}
+        />
+      ) : (
+        <>
+          <span>📷</span>
+          <span>Upload photo</span>
+        </>
+      )}
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className={s.photoInput}
+        onChange={handleChange}
+      />
+    </div>
+  );
+}
 
 const initialValues: AddRecipeFormValues = {
   recipeTitle: '',
