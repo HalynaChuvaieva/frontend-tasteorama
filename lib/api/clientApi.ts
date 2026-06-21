@@ -1,6 +1,6 @@
-import { Recipe } from "@/types/recipe";
-import { nextServer } from "./api";
-import { User } from "@/types/user";
+import { Recipe } from '@/types/recipe';
+import { nextServer } from './api';
+import { User } from '@/types/user';
 
 export type RegisterRequest = {
   email: string;
@@ -31,7 +31,7 @@ export const login = async (data: LoginRequest) => {
 };
 
 export const logout = async (): Promise<void> => {
-  await nextServer.post("/auth/logout");
+  await nextServer.post('/auth/logout');
 };
 
 export const getMe = async () => {
@@ -43,10 +43,6 @@ export const checkSession = async () => {
   const res = await nextServer.get<CheckSessionRequest>('/auth/session');
   return res.data.success;
 };
-
-
-
-
 
 export const register = async (data: RegisterRequest) => {
   const res = await nextServer.post<User>('/auth/register', data);
@@ -63,19 +59,27 @@ export interface FetchRecipesResponse {
 
 export async function fetchRecipes(
   page: number = 1,
-  query: string = "",
-  category?: string,
+  query: string = '',
+  category?: string
 ): Promise<FetchRecipesResponse> {
-  const params = { 
-    keyword: query, 
-    page, 
-    perPage: 12, 
-    category 
+  const params = {
+    keyword: query,
+    page,
+    perPage: 12,
+    category,
   };
 
-  const { data } = await nextServer.get<FetchRecipesResponse>("/recipes", {
+  const { data } = await nextServer.get<FetchRecipesResponse>('/recipes', {
     params,
   });
 
   return data;
+}
+
+export async function fetchRecipeById(recipeId: string): Promise<Recipe> {
+  const { data } = await fetch(`/api/recipes/${recipeId}`).then((res) => {
+    if (!res.ok) throw new Error('Failed to fetch recipe');
+    return res.json();
+  });
+  return data.data;
 }
