@@ -1,10 +1,12 @@
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import type { Metadata } from 'next';
 import './globals.css';
+import './reset.css';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import { montserrat, dmSans } from '@/app/fonts';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
+import 'modern-normalize';
 
 export default function RootLayout({
   children,
@@ -18,9 +20,8 @@ export default function RootLayout({
         <TanStackProvider>
           <AuthProvider>
             <Header />
-            <main>
-              {children}
-            </main>
+            <main>{children}</main>
+            <Footer />
           </AuthProvider>
         </TanStackProvider>
       </body>
