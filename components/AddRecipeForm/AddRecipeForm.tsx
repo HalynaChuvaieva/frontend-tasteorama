@@ -1,6 +1,6 @@
 'use client';
 
-import { Formik, Form, Field, useFormikContext } from 'formik';
+import { Formik, Form, Field, ErrorMessage, useFormikContext } from 'formik';
 import { useId, useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { addRecipeValidationSchema } from '@/lib/validation/addRecipeValidationSchema';
@@ -70,9 +70,9 @@ function PhotoUpload() {
 const initialValues: AddRecipeFormValues = {
   recipeTitle: '',
   recipeDescription: '',
-  cookingTime: 10,
-  calories: 150,
-  category: 'Soup',
+  cookingTime: '',
+  calories: '',
+  category: '',
   photo: null,
   selectedIngredientId: '',
   amount: '',
@@ -80,7 +80,10 @@ const initialValues: AddRecipeFormValues = {
   instructions: '',
 };
 
-export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
+export default function AddRecipeForm({
+  ingredients,
+  categories,
+}: AddRecipeFormProps) {
   const fieldId = useId();
 
   return (
@@ -109,6 +112,11 @@ export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
                 type="text"
                 placeholder="Enter the name of your recipe"
               />
+              <ErrorMessage
+                name="recipeTitle"
+                component="p"
+                className={s.error}
+              />
             </div>
 
             <div className={s.fieldGroup}>
@@ -125,6 +133,11 @@ export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
                 as="textarea"
                 placeholder="Enter a brief description of your recipe"
               />
+              <ErrorMessage
+                name="recipeDescription"
+                component="p"
+                className={s.error}
+              />
             </div>
 
             <div className={s.fieldGroup}>
@@ -135,7 +148,14 @@ export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
                 className={s.input}
                 name="cookingTime"
                 id={`${fieldId}-cookingTime`}
-                type="number"
+                type="text"
+                inputMode="numeric"
+                placeholder="10"
+              />
+              <ErrorMessage
+                name="cookingTime"
+                component="p"
+                className={s.error}
               />
             </div>
             <div className={s.fieldGroup}>
@@ -146,8 +166,11 @@ export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
                 className={s.input}
                 name="calories"
                 id={`${fieldId}-calories`}
-                type="number"
+                type="text"
+                inputMode="numeric"
+                placeholder="150 cals"
               />
+              <ErrorMessage name="calories" component="p" className={s.error} />
             </div>
             <div className={s.fieldGroup}>
               <label className={s.label} htmlFor={`${fieldId}-category`}>
@@ -159,10 +182,14 @@ export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
                 id={`${fieldId}-category`}
                 as="select"
               >
-                <option value="Soup">Soup</option>
-                <option value="Salad">Salad</option>
-                <option value="Dessert">Dessert</option>
+                <option value="" disabled hidden>Soup</option>
+                {categories.map(({ _id, name }) => (
+                  <option key={_id} value={_id}>
+                    {name}
+                  </option>
+                ))}
               </Field>
+              <ErrorMessage name="category" component="p" className={s.error} />
             </div>
           </div>
 
@@ -181,6 +208,11 @@ export default function AddRecipeForm({ ingredients }: AddRecipeFormProps) {
               id={`${fieldId}-instructions`}
               as="textarea"
               placeholder="Enter a text"
+            />
+            <ErrorMessage
+              name="instructions"
+              component="p"
+              className={s.error}
             />
           </div>
 
