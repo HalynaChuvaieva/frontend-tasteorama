@@ -93,13 +93,13 @@ export interface RemoveFavoriteResponse {
 export async function addToFavorites(
   recipeId: string
 ): Promise<AddFavoriteResponse> {
-  const { data } = await nextServer.post(`/recipes/${recipeId}/favorite`);
+  const { data } = await nextServer.post(`/api/recipes/${recipeId}/favorite`);
   return data;
 }
 
 export async function removeFromFavorites(
   recipeId: string
 ): Promise<RemoveFavoriteResponse> {
-  const { data } = await nextServer.delete(`/recipes/${recipeId}/favorite`);
+  const { data } = await nextServer.delete(`/api/recipes/${recipeId}/favorite`);
   return data;
 }
