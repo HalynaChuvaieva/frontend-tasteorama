@@ -5,7 +5,6 @@ import { User } from '@/types/user';
 export type RegisterRequest = {
   email: string;
   password: string;
-  name: string;
 };
 export type LoginRequest = {
   email: string;
@@ -21,7 +20,7 @@ export type UpdateUserRequest = {
 };
 
 export const updateMe = async (payload: UpdateUserRequest) => {
-  const res = await nextServer.patch<User>('/users/current/', payload);
+  const res = await nextServer.patch<User>('/users/me', payload);
   return res.data;
 };
 
@@ -35,7 +34,7 @@ export const logout = async (): Promise<void> => {
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>('/users/current/');
+  const { data } = await nextServer.get<User>('/users/me');
   return data;
 };
 
@@ -60,16 +59,18 @@ export interface FetchRecipesResponse {
 export async function fetchRecipes(
   page: number = 1,
   query: string = '',
-  category?: string
+  category?: string,
+  ingredient?: string
 ): Promise<FetchRecipesResponse> {
   const params = {
     keyword: query,
     page,
     perPage: 12,
     category,
+    ingredient,
   };
 
-  const { data } = await nextServer.get<FetchRecipesResponse>('/recipes', {
+  const { data } = await nextServer.get<FetchRecipesResponse>('/api/recipes', {
     params,
   });
 
@@ -96,6 +97,14 @@ export interface RemoveFavoriteResponse {
   data: {
     recipeId: string;
   };
+}
+
+export async function fetchRecipeById(recipeId: string): Promise<Recipe> {
+  const { data } = await fetch(`/api/recipes/${recipeId}`).then((res) => {
+    if (!res.ok) throw new Error('Failed to fetch recipe');
+    return res.json();
+  });
+  return data.data;
 }
 
 export async function addToFavorites(
