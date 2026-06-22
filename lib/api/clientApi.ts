@@ -99,13 +99,18 @@ export interface RemoveFavoriteResponse {
   };
 }
 
-export async function fetchRecipeById(recipeId: string): Promise<Recipe> {
-  const { data } = await fetch(`/api/recipes/${recipeId}`).then((res) => {
-    if (!res.ok) throw new Error('Failed to fetch recipe');
-    return res.json();
-  });
-  return data.data;
-}
+// export async function fetchRecipeById(recipeId: string): Promise<Recipe> {
+//   const { data } = await fetch(`/api/recipes/${recipeId}`).then((res) => {
+//     if (!res.ok) throw new Error('Failed to fetch recipe');
+//     return res.json();
+//   });
+//   return data.data;
+// }
+
+export const getFavoriteRecipes = async (): Promise<Recipe[]> => {
+  const res = await nextServer.get('/api/recipes/favorites');
+  return res.data.data; // адаптуй під свій envelope
+};
 
 export async function addToFavorites(
   recipeId: string

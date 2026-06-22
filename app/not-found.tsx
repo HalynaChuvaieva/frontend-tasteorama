@@ -6,7 +6,7 @@ const RecipeNotFound = () => {
   return (
     <div className={css.container}>
       <Image
-        src="/not-found.jpg" // заміни на свій шлях до картинки
+        src="/not-found.jpg"
         alt="Recipe not found"
         width={600}
         height={438}
