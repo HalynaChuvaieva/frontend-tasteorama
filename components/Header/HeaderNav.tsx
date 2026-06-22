@@ -58,13 +58,13 @@ const HeaderNav = () => {
         </Link>
       </li>
       <li className={css.item}>
-        <Link href="/sign-in" className={css.link} prefetch={false}>
+        <Link href="/auth/login" className={css.link} prefetch={false}>
           Log in
         </Link>
       </li>
       <li className={css.item}>
         <Link
-          href="/sign-up"
+          href="/auth/register"
           className={`${css.link} ${css.cta}`}
           prefetch={false}
         >
