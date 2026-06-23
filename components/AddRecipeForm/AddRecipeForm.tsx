@@ -8,6 +8,7 @@ import { addRecipeValidationSchema } from '@/lib/validation/addRecipeValidationS
 import { addRecipe } from '@/lib/api/recipesApi';
 import { showSuccessToast, showErrorToast } from '@/lib/utils/toast';
 import DynamicIngredients from './DynamicIngredients/DynamicIngredients';
+import Loader from '@/components/Loader/Loader';
 import s from './AddRecipesForm.module.css';
 import { AddRecipeFormValues, AddRecipeFormProps } from '@/types/addRecipe';
 
@@ -120,6 +121,15 @@ export default function AddRecipeForm({
     >
       {({ values, isSubmitting }) => (
         <Form className={s.form}>
+          {isSubmitting && (
+            <div className={s.loaderOverlay}>
+              <Loader
+                variant="section"
+                size="large"
+                text="Publishing recipe..."
+              />
+            </div>
+          )}
           <h2 className={s.pageTitle}>Add Recipe</h2>
 
           <section className={s.mainSection}>
