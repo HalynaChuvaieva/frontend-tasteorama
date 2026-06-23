@@ -1,9 +1,13 @@
 'use client';
 
-import { Formik, Form, Field, ErrorMessage, useFormikContext } from 'formik';
+import { Formik, Form, Field, ErrorMessage, useFormikContext, FormikHelpers } from 'formik';
 import { useId, useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { isAxiosError } from 'axios';
 import { addRecipeValidationSchema } from '@/lib/validation/addRecipeValidationSchema';
+import { addRecipe } from '@/lib/api/clientApi';
+import { showErrorToast } from '@/lib/utils/toast';
 import DynamicIngredients from './DynamicIngredients/DynamicIngredients';
 import s from './AddRecipesForm.module.css';
 import { AddRecipeFormValues, AddRecipeFormProps } from '@/types/addRecipe';
@@ -85,16 +89,37 @@ export default function AddRecipeForm({
   categories,
 }: AddRecipeFormProps) {
   const fieldId = useId();
+  const router = useRouter();
+
+  const handleSubmit = async (
+    values: AddRecipeFormValues,
+    actions: FormikHelpers<AddRecipeFormValues>
+  ) => {
+    try {
+      const recipe = await addRecipe(values);
+      router.push(`/recipes/${recipe._id}`);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        const message =
+          error.response?.data?.response?.message ||
+          error.response?.data?.message ||
+          error.message;
+        showErrorToast(message);
+      } else {
+        showErrorToast((error as Error).message || 'Something went wrong');
+      }
+    } finally {
+      actions.setSubmitting(false);
+    }
+  };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={addRecipeValidationSchema}
-      onSubmit={(values) => {
-        console.log(values);
-      }}
+      onSubmit={handleSubmit}
     >
-      {({ values }) => (
+      {({ values, isSubmitting }) => (
         <Form className={s.form}>
           <h2 className={s.pageTitle}>Add Recipe</h2>
 
@@ -227,8 +252,8 @@ export default function AddRecipeForm({
               />
             </div>
 
-            <button type="submit" className={s.btnPrimary}>
-              Publish Recipe
+            <button type="submit" className={s.btnPrimary} disabled={isSubmitting}>
+              {isSubmitting ? 'Publishing...' : 'Publish Recipe'}
             </button>
           </section>
 

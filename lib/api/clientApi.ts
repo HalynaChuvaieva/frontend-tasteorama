@@ -1,6 +1,7 @@
 import { Recipe } from '@/types/recipe';
 import { nextServer } from './api';
 import { User } from '@/types/user';
+import { AddRecipeFormValues } from '@/types/addRecipe';
 
 export type RegisterRequest = {
   name: string;
@@ -125,4 +126,40 @@ export async function removeFromFavorites(
 ): Promise<RemoveFavoriteResponse> {
   const { data } = await nextServer.delete(`/api/recipes/${recipeId}/favorite`);
   return data;
+}
+
+export async function addRecipe(values: AddRecipeFormValues): Promise<Recipe> {
+  const formData = new FormData();
+  formData.append('title', values.recipeTitle);
+  formData.append('description', values.recipeDescription);
+  formData.append('time', String(values.cookingTime));
+  if (values.calories !== '' && values.calories !== null) {
+    formData.append('calories', String(values.calories));
+  }
+  formData.append('category', values.category);
+  formData.append('instructions', values.instructions);
+  formData.append(
+    'ingredients',
+    JSON.stringify(
+      values.ingredientsList.map(({ ingredientId, amount }) => ({
+        id: ingredientId,
+        measure: amount,
+      }))
+    )
+  );
+  if (values.photo) formData.append('thumb', values.photo);
+
+  const res = await fetch('/api/recipes', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(
+      errorData.response?.message || errorData.error || 'Failed to add recipe'
+    );
+  }
+
+  return res.json();
 }
