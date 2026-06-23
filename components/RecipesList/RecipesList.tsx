@@ -8,6 +8,7 @@ import { fetchRecipes } from '@/lib/api/clientApi';
 import { Recipe } from '@/types/recipe';
 import Filters from '../Filters/Filters';
 import { useFiltersStore } from '@/lib/store/filtersStore';
+import Loader from '../Loader/Loader';
 
 interface RecipeListProps {
   initialRecipes: Recipe[];
@@ -80,13 +81,17 @@ export default function RecipeList({
         </div>
       </div>
 
-      <ul className={css.grid}>
-        {recipes.map((recipe) => (
-          <li key={recipe._id} className={css.gridItem}>
-            <RecipeCard recipe={recipe} />
-          </li>
-        ))}
-      </ul>
+      {isLoading ? (
+        <Loader text="Loading recipes..." variant="section" size="large" />
+      ) : (
+        <ul className={css.grid}>
+          {recipes.map((recipe) => (
+            <li key={recipe._id} className={css.gridItem}>
+              <RecipeCard recipe={recipe} />
+            </li>
+          ))}
+        </ul>
+      )}
 
       {hasMore && !isLoading && (
         <div className={css.loadMoreWrapper}>
