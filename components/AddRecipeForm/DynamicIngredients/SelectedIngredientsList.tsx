@@ -22,11 +22,11 @@ export default function SelectedIngredientsList({
       <ul className={s.ingredientList}>
         {ingredientsList.map((item, index) => (
           <li
-            key={`${item.ingredientId}-${index}`}
+            key={`${item.id}-${index}`}
             className={s.ingredientItem}
           >
             <span className={s.ingredientName}>{item.name}</span>
-            <span className={s.ingredientAmount}>{item.amount}</span>
+            <span className={s.ingredientAmount}>{item.measure}</span>
 
             <button
               type="button"
