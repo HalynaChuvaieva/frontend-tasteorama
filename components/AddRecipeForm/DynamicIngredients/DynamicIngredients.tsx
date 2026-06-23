@@ -37,7 +37,7 @@ export default function DynamicIngredients({
           }
 
           const isAlreadyAdded = ingredientsList.some(
-            (item) => item.ingredientId === selectedIngredient.id
+            (item) => item.id === selectedIngredient.id
           );
 
           if (isAlreadyAdded) {
@@ -45,9 +45,9 @@ export default function DynamicIngredients({
           }
 
           push({
-            ingredientId: selectedIngredient.id,
+            id: selectedIngredient.id,
             name: selectedIngredient.name,
-            amount,
+            measure: amount,
           });
 
           form.setFieldValue('selectedIngredientId', '');
