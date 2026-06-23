@@ -102,12 +102,10 @@ export default function AddRecipeForm({
             time: Number(values.cookingTime),
             calories: Number(values.calories),
             category: values.category,
-            ingredients: values.ingredientsList.map(
-              ({ ingredientId, amount }) => ({
-                id: ingredientId,
-                measure: amount,
-              })
-            ),
+            ingredients: values.ingredientsList.map(({ id, measure }) => ({
+              id,
+              measure,
+            })),
             instructions: values.instructions,
             photo: values.photo,
           });

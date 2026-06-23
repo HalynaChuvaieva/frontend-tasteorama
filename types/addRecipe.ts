@@ -2,9 +2,9 @@ import type { IngredientOption } from './ingredient';
 import type { Category } from './category';
 
 export interface RecipeIngredientItem {
-  ingredientId: string;
+  id: string;
   name: string;
-  amount: string;
+  measure: string;
 }
 
 export interface AddRecipeFormValues {

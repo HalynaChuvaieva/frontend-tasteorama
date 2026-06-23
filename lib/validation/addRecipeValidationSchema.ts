@@ -17,8 +17,8 @@ export const addRecipeValidationSchema = Yup.object({
   ingredientsList: Yup.array()
     .of(
       Yup.object({
-        ingredientId: Yup.string().required('Please select an ingredient'),
-        amount: Yup.string().trim().required('Please enter the amount'),
+        id: Yup.string().required('Please select an ingredient'),
+        measure: Yup.string().trim().required('Please enter the amount'),
       })
     )
     .min(2, 'Please add at least 2 ingredients')
