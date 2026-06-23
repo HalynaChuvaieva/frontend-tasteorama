@@ -8,7 +8,7 @@ export const addRecipeValidationSchema = Yup.object({
     .required('Cooking time is required'),
   calories: Yup.number()
     .min(1, 'Calories must be at least 1')
-    .required('Calories is required'),
+    .optional(),
   category: Yup.string().required('Category is required'),
   instructions: Yup.string().trim().required('Instructions are required'),
   ingredientsList: Yup.array()

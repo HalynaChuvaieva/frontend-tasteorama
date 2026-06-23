@@ -2,8 +2,11 @@
 
 import { Formik, Form, Field, ErrorMessage, useFormikContext } from 'formik';
 import { useId, useRef, useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { addRecipeValidationSchema } from '@/lib/validation/addRecipeValidationSchema';
+import { addRecipe } from '@/lib/api/recipesApi';
+import { showSuccessToast, showErrorToast } from '@/lib/utils/toast';
 import DynamicIngredients from './DynamicIngredients/DynamicIngredients';
 import s from './AddRecipesForm.module.css';
 import { AddRecipeFormValues, AddRecipeFormProps } from '@/types/addRecipe';
@@ -85,19 +88,40 @@ export default function AddRecipeForm({
   categories,
 }: AddRecipeFormProps) {
   const fieldId = useId();
+  const router = useRouter();
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={addRecipeValidationSchema}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          const recipe = await addRecipe({
+            title: values.recipeTitle,
+            description: values.recipeDescription,
+            time: Number(values.cookingTime),
+            calories: Number(values.calories),
+            category: values.category,
+            ingredients: values.ingredientsList.map(({ ingredientId, amount }) => ({
+              ingredientId,
+              amount,
+            })),
+            instructions: values.instructions,
+            photo: values.photo,
+          });
+          showSuccessToast('Recipe published successfully!');
+          router.push(`/recipes/${recipe._id}`);
+        } catch {
+          showErrorToast('Failed to publish recipe. Please try again.');
+        } finally {
+          setSubmitting(false);
+        }
       }}
     >
-      {({ values }) => (
+      {({ values, isSubmitting }) => (
         <Form className={s.form}>
           <h2 className={s.pageTitle}>Add Recipe</h2>
-
+        
           <section className={s.mainSection}>
             <div className={s.generalGrid}>
               <h3 className={s.sectionTitle}>General Information</h3>
@@ -227,8 +251,8 @@ export default function AddRecipeForm({
               />
             </div>
 
-            <button type="submit" className={s.btnPrimary}>
-              Publish Recipe
+            <button type="submit" className={s.btnPrimary} disabled={isSubmitting}>
+              {isSubmitting ? 'Publishing...' : 'Publish Recipe'}
             </button>
           </section>
 
