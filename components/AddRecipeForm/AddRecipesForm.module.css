@@ -8,9 +8,26 @@
 }
 
 .form {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 48px 16px 48px;
+}
+
+.loaderOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(251, 252, 248, 0.75);
+  backdrop-filter: blur(2px);
+  border-radius: 16px;
+
+  pointer-events: all;
 }
 
 .photoSection {

@@ -9,7 +9,10 @@
     font-size: 18px;
     background-color: #9b6c43;
     border-color: transparent;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     margin: 24px auto 0;
     transition: background-color 200ms ease;
 }

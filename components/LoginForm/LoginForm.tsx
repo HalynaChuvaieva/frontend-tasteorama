@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import { login, LoginRequest } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
+import Loader from '@/components/Loader/Loader';
 import css from './LoginForm.module.css';
 import { isAxiosError } from 'axios';
 import { showSuccessToast, showErrorToast } from '@/lib/utils/toast';
@@ -150,7 +151,7 @@ export default function LoginForm() {
               className={css.actionsButton}
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Loading...' : 'Login'}
+              {isSubmitting ? <Loader variant="button" size="small" /> : 'Login'}
             </button>
           </div>
           <p className={css.footerText}>
