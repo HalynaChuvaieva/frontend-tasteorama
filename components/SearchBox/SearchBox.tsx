@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import css from './SearchBox.module.css';
+import Loader from '../Loader/Loader';
+import style from '@/app/Home.module.css';
 
 interface SearchBoxProps {
   onSearch: (value: string) => void;
@@ -26,15 +28,15 @@ function SearchBox({ onSearch, isLoading }: SearchBoxProps) {
   };
   return (
     <>
-      <form className="css.form" onSubmit={handleSubmit}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <input
           className={css.input}
           name="query"
           type="text"
           placeholder="Search recipes"
         />
-        <button type="submit" disabled={isLoading}>
-          search
+        <button className={css.submit__btn} type="submit" disabled={isLoading}>
+          {isLoading ? <Loader variant="button" size="small" /> : 'Search'}
         </button>
       </form>
       {error && <p className={css.error}>{error}</p>}

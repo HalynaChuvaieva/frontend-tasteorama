@@ -12,6 +12,7 @@ import { showSuccessToast, showErrorToast } from '@/lib/utils/toast';
 import { registerValidationSchema } from '@/lib/validation/registerValidationSchema';
 
 import css from './RegisterForm.module.css';
+import Loader from '@/components/Loader/Loader';
 
 type RegisterFormValues = RegisterRequest & {
   confirmPassword: string;
@@ -192,7 +193,7 @@ export default function RegisterForm() {
               disabled={isSubmitting}
               className={css.actionsButton}
             >
-              {isSubmitting ? 'Loading...' : 'Register'}
+              {isSubmitting ? <Loader variant="button" size="small" /> : 'Register'}
             </button>
           </div>
 

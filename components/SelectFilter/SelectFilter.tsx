@@ -1,10 +1,9 @@
-import { Category } from '@/types/category';
-import { Ingredient } from '@/types/ingredient';
-
 import { ChangeEvent } from 'react';
 
+import css from './SelectFilter.module.css';
+
 interface SelectFiltersProps {
-  options: Ingredient[] | Category[];
+  options: { _id: string; name: string }[];
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
@@ -28,8 +27,8 @@ function SelectFilter({
           onChange={handleChange}
         >
           <option value="">{placeholder}</option>
-          {options.map((option) => (
-            <option key={option._id} value={option.name}>
+          {options.map((option, index) => (
+            <option key={index} value={option.name}>
               {option.name}
             </option>
           ))}

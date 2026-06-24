@@ -1,4 +1,5 @@
 "use client";
+import Loader from '../Loader/Loader';
 import css from "./LoadMoreBtn.module.css";
 
 interface LoadMoreBtnProps {
@@ -15,7 +16,7 @@ export default function LoadMoreBtn({ onClick, disabled = false }: LoadMoreBtnPr
       disabled={disabled}
       aria-label="Load more recipes"
     >
-      {disabled ? "Loading..." : "Load more"}
+      {disabled ? <Loader variant="button" size="small" /> : "Load more"}
     </button>
   );
 }

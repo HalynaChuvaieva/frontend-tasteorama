@@ -20,32 +20,54 @@ export type UpdateUserRequest = {
 };
 
 export const updateMe = async (payload: UpdateUserRequest) => {
-  const res = await nextServer.patch<User>('/users/me', payload);
+  const res = await nextServer.patch<User>('/users/current', payload);
   return res.data;
 };
 
-export const login = async (data: LoginRequest) => {
-  const res = await nextServer.post<User>('/auth/login', data);
-  return res.data;
+export const login = async (data: LoginRequest): Promise<User> => {
+  const res = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.response?.message || err?.error || 'Login failed');
+  }
+  return res.json();
 };
 
 export const logout = async (): Promise<void> => {
-  await nextServer.post('/auth/logout');
+  await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
 };
 
 export const getMe = async () => {
-  const { data } = await nextServer.get<User>('/users/me');
+  const { data } = await nextServer.get<User>('/users/current');
   return data;
 };
 
-export const checkSession = async () => {
-  const res = await nextServer.get<CheckSessionRequest>('/auth/session');
-  return res.data.success;
+export const checkSession = async (): Promise<boolean> => {
+  const res = await fetch('/api/auth/session', { credentials: 'include' });
+  if (!res.ok) return false;
+  const data: CheckSessionRequest = await res.json();
+  return data.success;
 };
 
-export const register = async (data: RegisterRequest) => {
-  const res = await nextServer.post<User>('/auth/register', data);
-  return res.data;
+export const register = async (data: RegisterRequest): Promise<User> => {
+  const res = await fetch('/api/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(
+      err?.response?.message || err?.error || 'Registration failed'
+    );
+  }
+  return res.json();
 };
 
 export interface FetchRecipesResponse {
@@ -70,7 +92,7 @@ export async function fetchRecipes(
     ingredient,
   };
 
-  const { data } = await nextServer.get<FetchRecipesResponse>('/api/recipes', {
+  const { data } = await nextServer.get<FetchRecipesResponse>('/recipes', {
     params,
   });
 
@@ -78,10 +100,9 @@ export async function fetchRecipes(
 }
 
 export async function fetchRecipeById(recipeId: string): Promise<Recipe> {
-  const { data } = await fetch(`/api/recipes/${recipeId}`).then((res) => {
-    if (!res.ok) throw new Error('Failed to fetch recipe');
-    return res.json();
-  });
+  const { data } = await nextServer.get<{ data: Recipe }>(
+    `/recipes/${recipeId}`
+  );
   return data.data;
 }
 
@@ -99,17 +120,9 @@ export interface RemoveFavoriteResponse {
   };
 }
 
-// export async function fetchRecipeById(recipeId: string): Promise<Recipe> {
-//   const { data } = await fetch(`/api/recipes/${recipeId}`).then((res) => {
-//     if (!res.ok) throw new Error('Failed to fetch recipe');
-//     return res.json();
-//   });
-//   return data.data;
-// }
-
 export const getFavoriteRecipes = async (): Promise<Recipe[]> => {
-  const res = await nextServer.get('/api/recipes/favorites');
-  return res.data.data; // адаптуй під свій envelope
+  const res = await nextServer.get('/recipes/favorites');
+  return res.data;
 };
 
 export async function addToFavorites(
