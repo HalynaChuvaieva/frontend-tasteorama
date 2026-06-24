@@ -9,6 +9,7 @@ import { Recipe } from '@/types/recipe';
 import Filters from '../Filters/Filters';
 import { useFiltersStore } from '@/lib/store/filtersStore';
 import Loader from '../Loader/Loader';
+import SearchEmptyState from '../SearchEmptyState/SearchEmptyState';
 
 interface RecipeListProps {
   initialRecipes: Recipe[];
@@ -75,7 +76,9 @@ export default function RecipeList({
   return (
     <div className={css.container}>
       <div className={css.header}>
-        <h1 className={css.title}>Recipes</h1>
+        <h1 className={css.title}>
+          {searchQuery ? `Search Results for "${searchQuery}"` : 'Recipes'}
+        </h1>
         <div className={css.meta}>
           <Filters />
         </div>
@@ -83,6 +86,8 @@ export default function RecipeList({
 
       {isLoading ? (
         <Loader text="Loading recipes..." variant="section" size="large" />
+      ) : recipes.length === 0 ? (
+        <SearchEmptyState />
       ) : (
         <ul className={css.grid}>
           {recipes.map((recipe) => (

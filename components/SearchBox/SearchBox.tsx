@@ -11,6 +11,7 @@ interface SearchBoxProps {
 }
 function SearchBox({ onSearch, isLoading }: SearchBoxProps) {
   const [error, setError] = useState<string>('');
+
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -28,7 +29,11 @@ function SearchBox({ onSearch, isLoading }: SearchBoxProps) {
   };
   return (
     <>
-      <form className={css.form} onSubmit={handleSubmit}>
+      <form
+        id="search__recipes__form"
+        className={css.form}
+        onSubmit={handleSubmit}
+      >
         <input
           className={css.input}
           name="query"

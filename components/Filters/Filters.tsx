@@ -67,9 +67,14 @@ function Filters() {
   const handleReset = () => {
     clearFilters();
     updateFilters({ keyword: '', category: '', ingredient: '' });
-  };
 
-  console.log('filters store: ', filters);
+    const searchForm = document.getElementById(
+      'search__recipes__form'
+    ) as HTMLFormElement;
+    if (searchForm) {
+      searchForm.reset();
+    }
+  };
 
   return (
     <>
