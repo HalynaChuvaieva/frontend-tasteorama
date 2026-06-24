@@ -15,13 +15,8 @@ export async function fetchRecipes({
   category,
   ingredient,
 }: SearchFilters): Promise<FetchNotesResponse> {
-<<<<<<< Updated upstream
-  const params: Record<string, string | number> = {
-    perPage: 12,
-  };
-=======
+
   const params = new URLSearchParams();
->>>>>>> Stashed changes
 
   if (keyword && keyword.trim() !== '') params.set('keyword', keyword.trim());
   if (category && category.trim() !== '') params.set('category', category.trim());

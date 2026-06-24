@@ -10,7 +10,11 @@ export async function POST(_req: Request, { params }: Props) {
   try {
     const cookieStore = await cookies();
     const { id } = await params;
+<<<<<<< HEAD
     const res = await api.post(`/recipes/${id}/favorite`, null, {
+=======
+    const res = await api.post(`api/recipes/${id}/favorite`, null, {
+>>>>>>> cf58888755869c76923ca7682f77435422f799fc
       headers: { Cookie: cookieStore.toString() },
     });
     return NextResponse.json(res.data, { status: res.status });
@@ -30,10 +34,18 @@ export async function POST(_req: Request, { params }: Props) {
 }
 
 export async function DELETE(_req: Request, { params }: Props) {
+<<<<<<< HEAD
   try {
     const cookieStore = await cookies();
     const { id } = await params;
     const res = await api.delete(`/recipes/${id}/favorite`, {
+=======
+  console.log('DELETE /favorite hit');
+  try {
+    const cookieStore = await cookies();
+    const { id } = await params;
+    const res = await api.delete(`api/recipes/${id}/favorite`, {
+>>>>>>> cf58888755869c76923ca7682f77435422f799fc
       headers: { Cookie: cookieStore.toString() },
     });
     return NextResponse.json(res.data, { status: res.status });

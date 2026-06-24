@@ -10,10 +10,7 @@ import { showSuccessToast, showErrorToast } from '@/lib/utils/toast';
 import DynamicIngredients from './DynamicIngredients/DynamicIngredients';
 import Loader from '@/components/Loader/Loader';
 import s from './AddRecipesForm.module.css';
-import {
-  AddRecipeFormValues,
-  AddRecipeFormProps,
- } from '@/types/addRecipe';
+import { AddRecipeFormValues, AddRecipeFormProps } from '@/types/addRecipe';
 
 function PhotoUpload() {
   const { setFieldValue } = useFormikContext<AddRecipeFormValues>();
@@ -53,7 +50,13 @@ function PhotoUpload() {
           style={{ objectFit: 'cover' }}
         />
       ) : (
-        <svg width="44" height="38" viewBox="0 0 38 32" aria-hidden="true" className={s.photoIcon}>
+        <svg
+          width="44"
+          height="38"
+          viewBox="0 0 38 32"
+          aria-hidden="true"
+          className={s.photoIcon}
+        >
           <use href="/icons/icons.svg#icon-photo" />
         </svg>
       )}

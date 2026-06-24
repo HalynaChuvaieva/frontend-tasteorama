@@ -20,9 +20,9 @@ function SelectFilter({
   };
   return (
     <>
-      <div className="filter__field">
+      <div className={css.filter__field}>
         <select
-          className="filter__select"
+          className={css.filter__select}
           value={value}
           onChange={handleChange}
         >
