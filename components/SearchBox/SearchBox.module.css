@@ -35,6 +35,10 @@
   transition: opacity 0.2s ease;
 }
 
+.submit__btn:hover {
+  background-color: var(--brown);
+}
+
 .error {
   color: var(--red);
   font-family: var(--second-family);
