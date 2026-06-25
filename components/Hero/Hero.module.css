@@ -4,7 +4,8 @@
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-  min-height: 443px;
+  min-height: 513px;
+  padding-top: 35px;
   background:
     linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3)),
     url('/images/banner-mob.jpg') no-repeat center center;
@@ -12,11 +13,11 @@
 }
 
 .hero__title {
-  font-family: var(--font-family);
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 40px;
   color: var(--white);
-  margin: 0 0 28px 0;
+  margin-bottom: 24px;
   text-align: left;
   max-width: 100%;
 }
@@ -55,6 +56,10 @@
     background-image:
       linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3)),
       url('/images/banner.jpg');
+  }
+
+  .hero__title {
+    width: 493px;
   }
 }
 
