@@ -3,6 +3,8 @@
   border-radius: 16px;
   background-color: #faf3e0;
   padding: 8px;
+  display: flex;
+  flex-direction: column;
 }
 
 .image {
@@ -17,6 +19,7 @@
 .content {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .header {
@@ -79,6 +82,7 @@
 .actions {
   display: flex;
   gap: 8px;
+  margin-top: auto;
 }
 
 .learnMore {
