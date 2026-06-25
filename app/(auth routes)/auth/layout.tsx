@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
+import Loader from '@/components/Loader/Loader';
 
 interface PublicLayoutProps {
   children: React.ReactNode;
@@ -17,5 +18,5 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
     });
   }, [router]);
 
-  return <>{loading ? <div>Loading...</div> : children}</>;
+  return <>{loading ? <Loader variant="section" size="large" /> : children}</>;
 }

@@ -6,17 +6,18 @@ import { usePathname, useRouter } from 'next/navigation';
 import css from './HeaderNav.module.css';
 import { useAuthStore } from '@/lib/store/authStore';
 import { logout } from '@/lib/api/clientApi';
+import LogoutModal from '@/components/LogoutModal/Modal';
 
 const HeaderNav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const panelId = useId();
 
-  const { user, isAuthenticated } = useAuthStore();
-  const clearIsAuthenticated = useAuthStore(
-    (state) => state.clearIsAuthenticated
-  );
+  const user = useAuthStore((s) => s.user);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const clearIsAuthenticated = useAuthStore((s) => s.clearIsAuthenticated);
 
   useEffect(() => {
     setIsOpen(false);
@@ -30,17 +31,26 @@ const HeaderNav = () => {
       if (event.key === 'Escape') setIsOpen(false);
     };
     document.addEventListener('keydown', handleKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
     return () => {
       document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = prev;
+      document.removeEventListener('keydown', onKey);
     };
   }, [isOpen]);
 
-  const handleLogout = async () => {
+  const handleLogoutConfirm = async () => {
     try {
       await logout();
     } finally {
       clearIsAuthenticated();
+      setIsLogoutOpen(false);
       setIsOpen(false);
       router.push('/');
     }
@@ -123,7 +133,7 @@ const HeaderNav = () => {
         <span className={css.divider} aria-hidden="true" />
         <button
           type="button"
-          onClick={handleLogout}
+          onClick={() => setIsLogoutOpen(true)}
           className={css.iconButton}
           aria-label="Log out"
         >
@@ -145,7 +155,7 @@ const HeaderNav = () => {
         aria-label={isOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={isOpen}
         aria-controls={panelId}
-        onClick={() => setIsOpen((value) => (value ? false : true))}
+        onClick={() => setIsOpen((v) => (v ? false : true))}
       >
         <svg className={css.icon32} aria-hidden="true">
           <use
@@ -166,6 +176,12 @@ const HeaderNav = () => {
       >
         <ul className={css.mobileList}>{links}</ul>
       </div>
+
+      <LogoutModal
+        isOpen={isLogoutOpen}
+        onClose={() => setIsLogoutOpen(false)}
+        onConfirm={handleLogoutConfirm}
+      />
     </nav>
   );
 };

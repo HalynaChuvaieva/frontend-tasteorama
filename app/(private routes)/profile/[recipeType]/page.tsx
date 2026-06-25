@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import ProfileNavigation from '@/components/ProfileNavigation/ProfileNavigation';
 import ProfileRecipesList from '@/components/ProfileRecipesList/ProfileRecipesList';
+import css from './ProfilePage.module.css';
 import {
   fetchMyRecipesServer,
   fetchFavoriteRecipesServer,
@@ -40,11 +41,9 @@ export default async function ProfileRecipeTypePage({ params }: Props) {
   }
 
   return (
-    <main
-      style={{ padding: '40px 20px', maxWidth: '1200px', margin: '0 auto' }}
-    >
+    <div className={css.container}>
+      <h1 className={css.title}>My Profile</h1>
       <ProfileNavigation />
-
       <ProfileRecipesList
         initialRecipes={initialData.recipes}
         totalPages={initialData.totalPages}
@@ -52,6 +51,6 @@ export default async function ProfileRecipeTypePage({ params }: Props) {
         recipeType={recipeType as 'own' | 'favorites'}
         fetchMoreFn={fetchMoreRecipesAction}
       />
-    </main>
+    </div>
   );
 }
