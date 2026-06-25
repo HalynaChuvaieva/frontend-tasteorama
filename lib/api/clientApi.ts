@@ -139,3 +139,25 @@ export async function removeFromFavorites(
   const { data } = await nextServer.delete(`/recipes/${recipeId}/favorite`);
   return data;
 }
+
+export async function fetchMyRecipes(
+  page: number = 1
+): Promise<FetchRecipesResponse> {
+  const { data } = await nextServer.get<FetchRecipesResponse>('/my/recipes', {
+    params: { page, perPage: 12 },
+  });
+  return data;
+}
+
+// Отримання улюблених рецептів з пагінацією для клієнта
+export async function fetchFavoriteRecipes(
+  page: number = 1
+): Promise<FetchRecipesResponse> {
+  const { data } = await nextServer.get<FetchRecipesResponse>(
+    '/recipes/favorites',
+    {
+      params: { page, perPage: 12 },
+    }
+  );
+  return data;
+}

@@ -152,3 +152,54 @@ export async function fetchRecipeByIdServer(
     throw error;
   }
 }
+// === ДОДАТИ В КІНЕЦЬ ФАЙЛУ serverApi.ts ===
+
+// Отримання власних рецептів на сервері (перша сторінка)
+export async function fetchMyRecipesServer(
+  page: number = 1
+): Promise<FetchRecipesResponse> {
+  try {
+    const cookieStore = await cookies();
+    const res = await api.get('/api/my/recipes', {
+      params: { page, perPage: 12 },
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.error('Server fetch my recipes error:', error);
+    return {
+      page: 1,
+      perPage: 12,
+      totalRecipes: 0,
+      totalPages: 0,
+      recipes: [],
+    };
+  }
+}
+
+// Отримання улюблених рецептів на сервері (перша сторінка)
+export async function fetchFavoriteRecipesServer(
+  page: number = 1
+): Promise<FetchRecipesResponse> {
+  try {
+    const cookieStore = await cookies();
+    const res = await api.get('/api/recipes/favorites', {
+      params: { page, perPage: 12 },
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.error('Server fetch favorite recipes error:', error);
+    return {
+      page: 1,
+      perPage: 12,
+      totalRecipes: 0,
+      totalPages: 0,
+      recipes: [],
+    };
+  }
+}
