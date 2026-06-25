@@ -12,25 +12,18 @@ export default function ProfileNavigation() {
 
   return (
     <nav className={css.navContainer}>
-      {' '}
       <Link
         href="/profile/own"
-        className={
-          css.link + ' ' + isActive('/profile/own') ? css.activeLink : ''
-        }
+        className={`${css.link} ${isActive('/profile/own') ? css.activeLink : ''}`}
       >
-        {' '}
-        My Recipes{' '}
-      </Link>{' '}
+        My Recipes
+      </Link>
       <Link
         href="/profile/favorites"
-        className={
-          css.link + ' ' + isActive('/profile/favorites') ? css.activeLink : ''
-        }
+        className={`${css.link} ${isActive('/profile/favorites') ? css.activeLink : ''}`}
       >
-        {' '}
-        Saved Recipes{' '}
-      </Link>{' '}
+        Saved Recipes
+      </Link>
     </nav>
   );
 }

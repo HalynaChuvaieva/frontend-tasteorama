@@ -33,7 +33,7 @@ export interface AddRecipePayload {
   title: string;
   description: string;
   time: number;
-  calories: number;
+  calories?: number;
   category: string;
   ingredients: { id: string; measure: string }[];
   instructions: string;
@@ -45,14 +45,12 @@ export async function addRecipe(payload: AddRecipePayload): Promise<Recipe> {
   formData.append('title', payload.title);
   formData.append('description', payload.description);
   formData.append('time', String(payload.time));
-  formData.append('calories', String(payload.calories));
+  if (payload.calories !== undefined) formData.append('calories', String(payload.calories));
   formData.append('category', payload.category);
   formData.append('ingredients', JSON.stringify(payload.ingredients));
   formData.append('instructions', payload.instructions);
-  if (payload.photo) formData.append('photo', payload.photo);
+  if (payload.photo) formData.append('image', payload.photo);
 
-  const { data } = await nextServer.post<Recipe>('/recipes', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  const { data } = await nextServer.post<Recipe>('/recipes', formData);
   return data;
 }

@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import SaveButton from '@/components/SaveButton/SaveButton';
+import Loader from '@/components/Loader/Loader';
 
 const RecipeDetailsClient = () => {
   const { recipeId } = useParams<{ recipeId: string }>();
@@ -20,7 +21,10 @@ const RecipeDetailsClient = () => {
     refetchOnMount: false,
   });
 
-  if (isLoading) return <p>Loading, please wait...</p>;
+  if (isLoading) return <Loader
+                  variant="section"
+                  size="large"
+                />;
   if (error || !recipe) return <p>Something went wrong.</p>;
 
   return (
@@ -31,14 +35,9 @@ const RecipeDetailsClient = () => {
         </div>
         <div className={css.imageWrapper}>
           <Image
-            src={
-              recipe.thumb ||
-              'https://via.placeholder.com/600x400?text=No+Image'
-            }
-            // width={704}
-            // height={624}
-            fill // Вместо width/height
-            sizes="(max-width: 1440px) 100vw, 1225px"
+            src={recipe.thumb || recipe.image || '/not-found.jpg'}
+            fill
+            // sizes="(max-width: 768px) 100vw, 600px"
             alt={recipe.title}
             className={css.image}
           />
@@ -51,7 +50,7 @@ const RecipeDetailsClient = () => {
             <h3 className={css.infoBoxTitle}>General informations</h3>
             <div className={css.infoItem}>
               <span className={css.infoLabel}>Category:</span>
-              <span className={css.infoValue}>{recipe.category}</span>
+              <span className={css.infoValue}>{recipe.category.name}</span>
             </div>
             <div className={css.infoItem}>
               <span className={css.infoLabel}>Cooking time:</span>
@@ -89,6 +88,27 @@ const RecipeDetailsClient = () => {
             <p className={css.instructions}>{recipe.instructions}</p>
           </section>
         </div>
+
+        <aside className={css.sidebar}>
+          <div className={css.infoBox}>
+            <h3 className={css.infoBoxTitle}>General informations</h3>
+            <div className={css.infoItem}>
+              <span className={css.infoLabel}>Category:</span>
+              <span className={css.infoValue}>{recipe.category?.name}</span>
+            </div>
+            <div className={css.infoItem}>
+              <span className={css.infoLabel}>Cooking time:</span>
+              <span className={css.infoValue}>{recipe.time} minutes</span>
+            </div>
+            <div className={css.infoItem}>
+              <span className={css.infoLabel}>Calorie content:</span>
+              <span className={css.infoValue}>
+                Approx. {recipe.calories || `~`} kcal per serving
+              </span>
+            </div>
+          </div>
+          <SaveButton recipeId={recipeId} />
+        </aside>
       </div>
     </div>
   );

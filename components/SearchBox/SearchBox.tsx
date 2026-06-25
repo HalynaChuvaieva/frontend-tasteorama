@@ -11,12 +11,12 @@ interface SearchBoxProps {
 }
 function SearchBox({ onSearch, isLoading }: SearchBoxProps) {
   const [error, setError] = useState<string>('');
+
   const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
     const query = (formData.get('query') as string) || '';
-    console.log('Serch: ', query);
 
     if (!query.trim()) {
       setError('Please enter a recipe name to search!');
@@ -28,18 +28,25 @@ function SearchBox({ onSearch, isLoading }: SearchBoxProps) {
   };
   return (
     <>
-      <form className={css.form} onSubmit={handleSubmit}>
-        <input
-          className={css.input}
-          name="query"
-          type="text"
-          placeholder="Search recipes"
-        />
+      <form
+        id="search__recipes__form"
+        className={css.form}
+        onSubmit={handleSubmit}
+      >
+        <div className={css.searchWrapper}>
+          <input
+            className={`${css.input} ${error ? css.input__error : ''}`}
+            name="query"
+            type="text"
+            placeholder="Search recipes"
+          />
+          {error && <p className={css.error}>{error}</p>}
+        </div>
+
         <button className={css.submit__btn} type="submit" disabled={isLoading}>
           {isLoading ? <Loader variant="button" size="small" /> : 'Search'}
         </button>
       </form>
-      {error && <p className={css.error}>{error}</p>}
     </>
   );
 }

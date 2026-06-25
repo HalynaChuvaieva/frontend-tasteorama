@@ -78,17 +78,23 @@ export default function RecipeCard({
   const shouldShowActive =
     variant === 'favorite' || (isAuthenticated && isFavorite);
 
+  const imageSrc = recipe.thumb || recipe.image;
+
+  const [loadingLink, setLoadingLink] = useState(false);
+
   return (
     <>
       <article className={css.card}>
-      {recipe.thumb ? <Image
-          src={recipe.thumb}
-          alt={recipe.title}
-          width={337}
-          height={230}
-          className={css.image}
-        /> : <></>}
-        
+        {imageSrc && (
+          <Image
+            src={imageSrc}
+            alt={recipe.title}
+            width={337}
+            height={230}
+            className={css.image}
+          />
+        )}
+
         <div className={css.content}>
           <div className={css.header}>
             <h3 className={css.title}>{recipe.title}</h3>
@@ -106,8 +112,20 @@ export default function RecipeCard({
             </span>
           </div>
           <div className={css.actions}>
-            <Link href={`/recipes/${recipeId}`} className={css.learnMore}>
-              Learn More
+            <Link
+              href={`/recipes/${recipeId}`}
+              className={css.learnMore}
+              onClick={() => setLoadingLink(true)}
+            >
+              {loadingLink ? (
+                <div className={css.dots}>
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              ) : (
+                'Learn More'
+              )}
             </Link>
             {variant !== 'own' && (
               <button
