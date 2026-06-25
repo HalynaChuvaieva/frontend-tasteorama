@@ -11,6 +11,7 @@ export async function proxy(request: NextRequest) {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get('accessToken')?.value;
   const refreshToken = cookieStore.get('refreshToken')?.value;
+  const sessionId = cookieStore.get('sessionId')?.value;
 
   const isPublicRoute = publicRoutes.some((route) =>
     pathname.startsWith(route)

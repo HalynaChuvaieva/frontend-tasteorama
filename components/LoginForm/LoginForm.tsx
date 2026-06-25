@@ -123,20 +123,11 @@ export default function LoginForm() {
                     <use
                       href={
                         showPassword
-                          ? '/icons/eye.svg'
-                          : '/icons/eye-crossed.svg'
+                          ? '/icons/icons.svg?v=2#icon-password-show'
+                          : '/icons/icons.svg?v=2#icon-password-hide'
                       }
                     />
                   </svg>
-                  {/* <Image
-                    src={
-                      showPassword ? '/icons/eye.svg' : '/icons/eye-crossed.svg'
-                    }
-                    alt=""
-                    width={24}
-                    height={24}
-                    aria-hidden="true"
-                  /> */}
                 </button>
               </div>
               <ErrorMessage
@@ -151,7 +142,11 @@ export default function LoginForm() {
               className={css.actionsButton}
               disabled={isSubmitting}
             >
-              {isSubmitting ? <Loader variant="button" size="small" /> : 'Login'}
+              {isSubmitting ? (
+                <Loader variant="button" size="small" />
+              ) : (
+                'Login'
+              )}
             </button>
           </div>
           <p className={css.footerText}>

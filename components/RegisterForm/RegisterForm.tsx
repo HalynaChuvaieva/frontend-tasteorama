@@ -146,12 +146,12 @@ export default function RegisterForm() {
                     }`}
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  <svg className={css.eyeIcon} width="24" height="24">
+                  <svg className={css.eyeIcon}>
                     <use
                       href={
                         showPassword
-                          ? '/icons/eye.svg'
-                          : '/icons/eye-crossed.svg'
+                          ? '/icons/icons.svg#icon-password-show'
+                          : '/icons/icons.svg#icon-password-hide'
                       }
                     />
                   </svg>
@@ -193,7 +193,11 @@ export default function RegisterForm() {
               disabled={isSubmitting}
               className={css.actionsButton}
             >
-              {isSubmitting ? <Loader variant="button" size="small" /> : 'Register'}
+              {isSubmitting ? (
+                <Loader variant="button" size="small" />
+              ) : (
+                'Register'
+              )}
             </button>
           </div>
 

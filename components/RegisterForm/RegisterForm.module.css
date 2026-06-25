@@ -134,6 +134,10 @@
 }
 
 .eyeIcon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  fill: none;
   stroke: var(--black);
 }
 
