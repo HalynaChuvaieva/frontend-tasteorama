@@ -15,6 +15,7 @@ export async function fetchRecipes({
   category,
   ingredient,
 }: SearchFilters): Promise<FetchNotesResponse> {
+
   const params = new URLSearchParams();
 
   if (keyword && keyword.trim() !== '') params.set('keyword', keyword.trim());
